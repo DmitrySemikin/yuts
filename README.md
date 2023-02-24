@@ -1,2 +1,2 @@
 # yuts
-Processing of timesheets for Julia
+Some project for private use.
