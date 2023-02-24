@@ -1,7 +1,10 @@
 package xyz.dsemikin.yuts.app;
 
+import xyz.dsemikin.yuts.kernel.YutsKernel;
+
 public class App {
     public static void main(String[] args) {
-        System.out.println("Hello Simple World!");
+        YutsKernel kernel = new YutsKernel();
+        kernel.doTheJob();
     }
 }

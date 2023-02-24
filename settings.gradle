@@ -1,2 +1,9 @@
 rootProject.name = 'yuts'
-include('app')
+include(
+        'app',
+        'yuts-csv-reader',
+        'yuts-data',
+        'yuts-gui-swing',
+        'yuts-kernel',
+        'yuts-simple-text-report-writer'
+)

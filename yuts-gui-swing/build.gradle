@@ -1,0 +1,6 @@
+plugins {
+    id 'xyz.dsemikin.yuts.java-library-conventions'
+}
+
+dependencies {
+}

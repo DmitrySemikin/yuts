@@ -1,0 +1,9 @@
+plugins {
+    id 'xyz.dsemikin.yuts.java-library-conventions'
+}
+
+dependencies {
+    implementation project(':yuts-data')
+    implementation project(':yuts-csv-reader')
+    implementation project(':yuts-simple-text-report-writer')
+}
