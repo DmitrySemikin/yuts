@@ -1,6 +1,6 @@
 package xyz.dsemikin.yuts.data;
 
-import java.time.LocalDate;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class WorkPeriod {
@@ -20,7 +20,15 @@ public class WorkPeriod {
         return periodEnd;
     }
 
-    public LocalDate getPeriodDay() {
-        return periodBegin.toLocalDate();
+    public Duration getDuration() {
+        return Duration.between(periodBegin, periodEnd);
+    }
+
+    public double getFullDurationInHours() {
+        return ((double)getDuration().toSeconds())/3600.0;
+    }
+
+    public double getFullDurationInMinutes() {
+        return ((double)getDuration().toSeconds())/60.0;
     }
 }

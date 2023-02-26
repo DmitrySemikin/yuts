@@ -15,7 +15,7 @@ public class TimesheetRecordsCsvWriter {
 
     public void writeTimesheetRecordsAsCsv(final List<TimesheetRecord> timesheetRecords, final Path outputCsvFilePath) {
         final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("hh:mm:ss");
+        final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         final String csvSeparator = "\t";
         try (final BufferedWriter writer = new BufferedWriter(new FileWriter(outputCsvFilePath.toFile(), StandardCharsets.UTF_8))) {
             writer.write("Date");
