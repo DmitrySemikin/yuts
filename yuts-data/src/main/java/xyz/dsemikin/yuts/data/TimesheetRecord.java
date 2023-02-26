@@ -2,7 +2,7 @@ package xyz.dsemikin.yuts.data;
 
 import java.time.LocalDateTime;
 
-public record TimeSheetRecord  (
+public record TimesheetRecord(
         LocalDateTime dateTime,
         TypeOfEvent typeOfEvent,
         String terminalName,

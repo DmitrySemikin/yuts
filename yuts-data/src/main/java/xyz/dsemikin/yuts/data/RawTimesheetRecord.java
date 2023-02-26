@@ -1,6 +1,6 @@
 package xyz.dsemikin.yuts.data;
 
-public record RawTimeSheetRecord(
+public record RawTimesheetRecord(
         String dateTime,
         String typeOfEvent,
         String terminalName,

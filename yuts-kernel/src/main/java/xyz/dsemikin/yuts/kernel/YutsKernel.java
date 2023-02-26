@@ -1,12 +1,12 @@
 package xyz.dsemikin.yuts.kernel;
 
 import xyz.dsemikin.yuts.csvreader.CsvReader;
-import xyz.dsemikin.yuts.data.TimeSheetRecord;
-import xyz.dsemikin.yuts.data.RawTimeSheetRecord;
+import xyz.dsemikin.yuts.data.RawTimesheetRecord;
+import xyz.dsemikin.yuts.data.TimesheetRecord;
 import xyz.dsemikin.yuts.data.TypeOfEvent;
-import xyz.dsemikin.yuts.simpletextreportwriter.SimpleTextReportWriter;
+import xyz.dsemikin.yuts.simpletextreportwriter.TimesheetRecordsCsvWriter;
 
-import java.nio.file.Paths;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -18,28 +18,28 @@ public class YutsKernel {
     public static final String WORK_BEGIN_CSV = "Kommen";
     public static final String WORK_END_CSV = "Gehen";
 
-    public void doTheJob(final String csvFilePath) {
+    public void doTheJob(final Path inputCsvFilePath, final Path outputCsvFilePath) {
+
         final CsvReader csvReader = new CsvReader();
-        final List<RawTimeSheetRecord> rawTimeSheetRecords = csvReader.readCsv(Paths.get(csvFilePath));
-        final List<TimeSheetRecord> timeSheetRecords = parseRecordsData(rawTimeSheetRecords);
-        for (var tsRecord : timeSheetRecords) {
-            System.out.println(tsRecord);
-        }
-        final SimpleTextReportWriter reportWriter = new SimpleTextReportWriter();
-        reportWriter.writeSimpleTextReport();
+        final List<RawTimesheetRecord> rawTimesheetRecords = csvReader.readCsv(inputCsvFilePath);
+
+        final List<TimesheetRecord> timesheetRecords = parseRecordsData(rawTimesheetRecords);
+
+        final TimesheetRecordsCsvWriter timesheetRecordsCsvWriter = new TimesheetRecordsCsvWriter();
+        timesheetRecordsCsvWriter.writeTimesheetRecordsAsCsv(timesheetRecords, outputCsvFilePath);
     }
 
-    private List<TimeSheetRecord> parseRecordsData(final List<RawTimeSheetRecord> rawTimeSheetRecords) {
-        return rawTimeSheetRecords.stream()
+    private List<TimesheetRecord> parseRecordsData(final List<RawTimesheetRecord> rawTimesheetRecords) {
+        return rawTimesheetRecords.stream()
                 .map(this::parseRecordData)
                 .collect(Collectors.toList());
     }
 
-    private TimeSheetRecord parseRecordData(final RawTimeSheetRecord rawTimeSheetRecord) {
+    private TimesheetRecord parseRecordData(final RawTimesheetRecord rawTimeSheetRecord) {
         if (!Objects.equals(rawTimeSheetRecord.errorCode(), SUCCESS_ERR_CODE)) {
             throw new RuntimeException("Error code of the record " + rawTimeSheetRecord + " is not " + SUCCESS_ERR_CODE);
         }
-        return new TimeSheetRecord(
+        return new TimesheetRecord(
                 parseDateTime(rawTimeSheetRecord.dateTime()),
                 parseTypeOfEvent(rawTimeSheetRecord.typeOfEvent()),
                 rawTimeSheetRecord.terminalName(),
