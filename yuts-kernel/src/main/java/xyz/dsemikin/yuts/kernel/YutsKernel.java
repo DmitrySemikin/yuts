@@ -25,8 +25,14 @@ public class YutsKernel {
 
         final List<TimesheetRecord> timesheetRecords = parseRecordsData(rawTimesheetRecords);
 
+        final TimesheetRecordListCleaner cleaner = new TimesheetRecordListCleaner();
+        final List<TimesheetRecord> timesheetRecordsCleaned = cleaner.cleanupTimesheetRecordsList(timesheetRecords);
+
+        final TimesheetRecordListValidator validator = new TimesheetRecordListValidator();
+        validator.validateTimesheetRecordList(timesheetRecordsCleaned);
+
         final TimesheetRecordsCsvWriter timesheetRecordsCsvWriter = new TimesheetRecordsCsvWriter();
-        timesheetRecordsCsvWriter.writeTimesheetRecordsAsCsv(timesheetRecords, outputCsvFilePath);
+        timesheetRecordsCsvWriter.writeTimesheetRecordsAsCsv(timesheetRecordsCleaned, outputCsvFilePath);
     }
 
     private List<TimesheetRecord> parseRecordsData(final List<RawTimesheetRecord> rawTimesheetRecords) {
